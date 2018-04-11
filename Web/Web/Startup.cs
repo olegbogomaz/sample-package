@@ -52,6 +52,15 @@ namespace Web
             }
 
             app.UseMvc();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = context =>
+                {
+                    context.Context.Response.Headers.Remove("Content-Length");
+                }
+            });
         }
     }
 }
