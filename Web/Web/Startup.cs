@@ -52,7 +52,9 @@ namespace Web
             app.Use(async (context, next) =>
                 {
                     await next();
-                    if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                    if (context.Response.StatusCode == 404 &&
+                        !Path.HasExtension(context.Request.Path.Value) &&
+                        !context.Request.Path.Value.StartsWith("/api/"))
                     {
                         context.Request.Path = "/index.html";
                         await next();
